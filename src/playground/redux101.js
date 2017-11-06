@@ -20,7 +20,12 @@ const resetCount = () => ({
   type: 'RESET',
 });
 
-const store = createStore((state = { count: 0 }, action) => {
+// Reducers
+
+// 1. Reducers are pure functions. Only depends on inputs
+// 2. Never directly change state or action
+
+const countReducers = (state = { count: 0 }, action) => {
   switch (action.type) {
     case 'INCREMENT':
       const incrementBy = typeof action.incrementBy === 'number' ? action.incrementBy : 1;
@@ -44,7 +49,12 @@ const store = createStore((state = { count: 0 }, action) => {
     default:
       return state;
   }
-});
+}
+
+// createStore is a type of Reducer
+// Reducers describe how the application's state changes in response to an action
+
+const store = createStore(countReducers);
 
 const unsubscribe = store.subscribe(() => {console.log(store.getState())});
 
